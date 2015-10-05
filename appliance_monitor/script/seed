@@ -1,0 +1,53 @@
+#!/usr/bin/env perl
+
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+
+use Schema;
+
+use Schema::ResultSet::Appliance;
+use Schema::ResultSet::Target;
+use Data::Faker::Internet;
+use Data::Faker::Company;
+
+use Data::Dumper;
+
+my $APPLIANCES = 1000;
+my $MAX_TARGETS_PER_APPLIANCE = 5;
+
+my $schema = Schema->connect('dbi:SQLite:./lib/Schema/database.db');
+create_appliance($schema) for (0 .. $APPLIANCES);
+
+sub create_appliance {
+    my ($schema) = @_;
+
+    my $appliance = $schema->resultset('Appliance')->create({
+        name        => randomize(Data::Faker::Internet->domain_name),
+        customer    => Data::Faker::Company->company,
+    });
+
+    create_target($appliance) for ( 0..int(rand($MAX_TARGETS_PER_APPLIANCE)) );
+
+    if (int( rand(100) ) > 90) {
+        $schema->resultset('Target')->create({
+            appliance_id    => $appliance->id,
+            hostname        => randomize('localhost'),
+            address         => '127.0.0.1',
+        });
+    }
+}
+
+sub randomize {
+        my $string = shift;
+        return int(rand(100000)) . '-' . $string;
+}
+
+sub create_target {
+        my $appliance = shift;
+        $appliance->result_source->schema->resultset('Target')->create({
+                appliance_id    => $appliance->id,
+                hostname        => randomize(Data::Faker::Internet->domain_name),
+                address         => Data::Faker::Internet->ip_address,
+        });
+}
+

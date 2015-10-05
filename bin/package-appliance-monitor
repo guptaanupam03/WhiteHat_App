@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+date=$(date +'%s')
+
+mkdir /tmp/$date
+
+git archive HEAD appliance_monitor | tar xv -C /tmp/$date
+
+cd /tmp/$date/appliance_monitor && git init && git add -A && git commit -m "Initial Commit"
+cd /tmp/$date && tar czvf appliance_monitor.tgz appliance_monitor
+
+echo /tmp/$date/appliance_monitor.tgz
+open /tmp/$date

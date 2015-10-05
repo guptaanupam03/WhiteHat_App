@@ -1,0 +1,2 @@
+#!/bin/bash
+dbicadmin -Ilib --schema Schema --config etc/schema.conf --config-stanza connect_info --deploy

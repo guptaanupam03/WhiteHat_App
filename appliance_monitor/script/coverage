@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# Find bindir the bash way
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+
+HARNESS_PERL_SWITCHES=-MDevel::Cover=-db,.cover_db $DIR/appliance_monitor test
+cover .cover_db
