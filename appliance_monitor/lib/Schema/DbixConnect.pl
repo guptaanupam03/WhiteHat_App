@@ -36,7 +36,6 @@ update_db(\@ip_Status);
 #        based on id's of both the table for further processing of the data.
 ######################################################################################
 sub read_db{
-    print "Inside read\n";
     undef @address;
     $rst = $connect->resultset('Target');
     # Sql equivqlent
@@ -107,7 +106,6 @@ sub ping_ip {
     while( ( $host, $rtt, $ip ) = $p->ack ) {
       # If the IP is active or responded back, we will push the value $ip_addr{$host}:Active to host key.
       push @ip_Status, "$ip_addr{$host}:Active\n";
-      print "@ip_Status\n";
     }
     
     return @ip_Status;

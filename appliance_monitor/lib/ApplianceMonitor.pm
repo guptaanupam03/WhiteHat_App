@@ -8,7 +8,7 @@ sub startup {
     # Router
     my $r = $self->routes;
     # Normal route to controller
-    $r->get('/')->to('example#welcome');
+    $r->get('/Dashboard')->to('Example#welcome', namespace => 'ApplianceMonitor::Controller');
 }
 
 1;
