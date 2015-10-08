@@ -7,6 +7,9 @@ development environment and a few libraries are needed.
 
 ## Setup
 
+
+
+
 Ideally, you should run Mojolicious with Perl 5.20.x. If you have something
 earlier on your machine, [Perlbrew](http://perlbrew.pl/) is very easy to
 install and use. You can use Perlbrew to install Perl 5.20.x either permanently
@@ -63,4 +66,21 @@ $ cd /tmp && tar czvf $(whoami)-submission.tgz $(whoami)-submission
 
 Send the resulting archive to us by email.
 
+## How to run the app?
 
+Modules that needs to be installed
+- Mojo::IOLoop
+- BSD::Resource
+- Net::Ping
+
+This app comprises of two tools:
+1) Monitoring - This tool acts as a stand alone script. It's sole purpose is to read the database to get
+   all the IP addresses along with the corresponding details. Once we have the data we ping the IP's
+   and after pinging the IP's we push the status for every IP into another table.
+   This tool is written on cron job which is scheduled for every 1 minute.
+   
+2) Reporting - Once we have the updated data inside the database, we read the data from the table
+   and will take out the success percentage and will render it to the web page along with the IP statuses.
+   This tool is part of morbo, so to see the result of reporting tool we need to run morbo on command line.
+
+Note: Need to write a cron job in order to run the monitoring tool and have the result displayed.
