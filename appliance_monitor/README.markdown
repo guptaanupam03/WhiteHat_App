@@ -76,11 +76,18 @@ Modules that needs to be installed
 This app comprises of two tools:
 1) Monitoring - This tool acts as a stand alone script. It's sole purpose is to read the database to get
    all the IP addresses along with the corresponding details. Once we have the data we ping the IP's
-   and after pinging the IP's we push the status for every IP into another table.
-   This tool is written on cron job which is scheduled for every 1 minute.
+   and after pinging the IP's we push the status for every IP into status table.
+   
+   Note: In order to run the Monitoring tool we need to run DbixConnect.pl script which is inside
+   script directory.
+   
+   Eg. /script$ perl DbixConnect.pl - will perform the above said activities.
    
 2) Reporting - Once we have the updated data inside the database, we read the data from the table
    and will take out the success percentage and will render it to the web page along with the IP statuses.
-   This tool is part of morbo, so to see the result of reporting tool we need to run morbo on command line.
-
-Note: Need to write a cron job in order to run the monitoring tool and have the result displayed.
+   This tool is part of web application.
+   
+   Note: In order to run the Reporting tool we need to run appliance_monitor script which is inside
+   script directory.
+   
+   Eg. /appliance_monitor$ morbo script/appliance_monitor - will perform the above said activities.
